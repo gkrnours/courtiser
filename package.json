@@ -1,0 +1,14 @@
+{
+	"name": "courtiser",
+	"preferGlobal": true,
+	"description": "A love letter to irc. Kiss.",
+	"version": "0.0.1",
+	"private": true,
+	"bin": {
+		"courtiser": "./bin/courtiser"
+	},
+	"dependencies": {
+		"curses":     "0.0.10",
+		"temp":				"0.5.0"
+	}
+}

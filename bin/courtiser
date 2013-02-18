@@ -1,0 +1,52 @@
+#!/usr/bin/env node
+
+var curses = require("../../curses")
+var gui    = require("../")
+var temp   = require("temp")
+
+var stdwin = curses.initscr()
+
+if(curses.has_colors()){
+	curses.start_color()
+	curses.init_pair(1, curses.COLOR_BLUE, curses.COLOR_BLACK)
+	curses.init_pair(2, curses.COLOR_WHITE, curses.COLOR_BLACK)
+	curses.init_pair(3, curses.COLOR_CYAN, curses.COLOR_RED)
+}
+
+curses.wattrset(stdwin, curses.color_pair(1) )
+curses.wclear(stdwin)
+curses.wrefresh(stdwin)
+var maxyx = curses.getmaxyx(stdwin)
+
+var list  = curses.subwin(stdwin, maxyx.y, 11, 0, 0)
+curses.wattrset(list, curses.color_pair(2))
+curses.wbkgd   (list, ' '.charCodeAt(0))
+curses.wclear  (list)
+curses.wmove   (list, 0, 10);
+curses.wvline  (list, 0, 99);
+curses.wrefresh(list)
+
+var main = curses.subwin(stdwin, maxyx.y, maxyx.x-11, 0, 11)
+var m_yx = curses.getmaxyx(main)
+curses.wattrset(main, curses.color_pair(3))
+curses.wbkgd   (main, ' '.charCodeAt(0))
+curses.wclear  (main)
+curses.wrefresh(main)
+
+
+//var chan = curses.derwin(main, m_yx.y-2, m_yx.x, 0, 0)
+
+var inpt = curses.subpad(main, 3, m_yx.x, m_yx.y-3, 0)
+curses.wattrset(inpt, curses.color_pair(3))
+curses.wbkgd   (inpt, ' '.charCodeAt(0))
+curses.wclear  (inpt)
+curses.wmove   (inpt, 0, 0);
+curses.whline  (inpt, 0, 99);
+curses.wmove   (inpt, 2, 0);
+curses.waddstr (inpt, ""+curses.A_COLOR)
+curses.wrefresh(inpt)
+
+curses.wgetstr (inpt)
+
+curses.wgetch(stdwin)
+curses.endwin()
